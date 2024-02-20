@@ -1,0 +1,117 @@
+:root{
+    --main-bg-color: #000814;
+    --header-bg-color: #001d3d;
+    --left-bar-bg-color: #020D20;
+    --title_color: #ffb703;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--main-bg-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--header-bg-color);
+    padding: 10px 0;
+    color: var(--title_color);
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+}
+.left_header{
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+}
+.left_header h3{
+    font-size: 1rem;
+    font-weight: 100;
+    margin-left: 10px;
+}
+.right_header{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+}
+.right_header svg{
+    margin-right: 20px;
+    fill: #ffb703;
+}
+.main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.left_navbar{
+    width: 20%;
+    background-color: var(--left-bar-bg-color);
+    height: calc(100vh - 80px);
+}
+.navbar_main_title{
+    color: #fff;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.navbar_main_title h2{
+    margin-left: 10px;
+}
+.navbar_main_title:hover{
+    transition: 0.2s;
+    border-left: 2px solid var(--title_color);
+}
+.navbar_main_title_header{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    fill: #fff;
+}
+.navbar_main_content{
+    height: 0px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.navbar_main_content a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+.navbar_main_content:hover a:hover{
+    color: var(--title_color);
+    transition: 0.2s;
+}
+.content{
+    width: 84%;
+    padding: 0 3% 0 3%;
+}
+
+.modif_page{
+    background-color: #ffb703;
+    box-shadow: rgba(214, 214, 214, 0.1) 0px 4px 12px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,145 @@
+<div id="content">
+    <div class="code">
+        <div class="code_header">
+            <div class="circle" id="red"></div>
+            <div class="circle" id="orange"></div>
+            <div class="circle" id="green"></div>
+            <h2 id="lang0">Python</h2>
+        </div>
+        <div id="code_content0" class="code_content">
+        </div>
+    </div>
+    <div class="code"><div class="code_header"><div class="circle" id="red"></div><div class="circle" id="orange"></div><div class="circle" id="green"></div><h2 id="lang0">Python</h2></div><div id="code_content0" class="code_content"></div></div>
+</div>
+<b>test</b>
+
+
+<script>
+    const cheminFichier = 'test.md';
+    async function lireFichierLigneParLigne(cheminFichier) {
+        try {
+            codeblock = false;
+            var language = "";
+            var code_content=[]
+            var nbCodeBlock=0;
+            const reponse = await fetch(cheminFichier);
+            const texte = await reponse.text();
+            const lignes = texte.split('\n');
+            lignes.forEach(function(ligne) {
+                //on commence par verifier que la ligne ne correspond pas à un codeblock
+                if(ligne.substring(0,3)=="```" && codeblock == false){
+                    nbCodeBlock++;
+                    language = ligne.substring(3);
+                    codeblock = true;
+                    console.log("nouveau codeblock trouvé avec pour language :"+language);
+                }else if(ligne[2]=="`" && codeblock == true){ // le cas ou l'on quittte le code block
+                    codeblock = false;
+                    document.getElementById('content').innerHTML += "<div class=\"code\"><div class=\"code_header\"><div class=\"circle\" id=\"red\"></div><div class=\"circle\" id=\"orange\"></div><div class=\"circle\" id=\"green\"></div><h2 id=\"lang"+nbCodeBlock+"\">Python</h2></div><div id=\"code_content"+nbCodeBlock+"\" class=\"code_content\"></div></div>";
+                    document.getElementById("lang"+nbCodeBlock).innerHTML=language; //on change le language du codeblock
+                    for(var i = 0; i<code_content.length; i++){
+                        document.getElementById("code_content"+nbCodeBlock).innerHTML += "<p>"+code_content[i]+"</p>";
+                    }
+                    console.log("fin du codeblock"+code_content);
+                }
+                if (codeblock){//si la ligne est un codeblock, on l'ajoute à la liste des lignes du codeblock
+                    if (ligne.substring(0,3)!="```"){
+                        code_content.push(ligne);
+                    }
+                }else{
+                    var count =0;
+                    for (let i = 0; i < ligne.length; i++) {
+                        if ((ligne[i] == '#') && i<6) {
+                            count++;
+                            console.log('Titre : ' + ligne);
+                        }
+                    }
+                    if (count == 0) {
+                        ligneToAppend="<p>"+ligne+"</p>";
+                    }
+                    else{
+                        ligneToAppend="<h"+count+">"+ligne.substring(count) + '</h'+count+">";   //ligne.substring(count) c'est pour enlever les # devant les titres
+                    }
+                    nbquote = [0,0]
+                    for (let i = 0; i < ligne.length; i++) {
+                        if (ligne[i]== "\`"){
+                            if(nbquote[0] == 0){
+                                nbquote[0]=i;
+                            }else{
+                                nbquote[1]=i;
+                                ligneToAppend = ligneToAppend.substring(0, nbquote[0]+1) + "<span class=\"bold\">" +ligne.substring(nbquote[0]+1,nbquote[1]) + "</span>" + ligne.substring(nbquote[1]+1);
+                                console.log(ligneToAppend)
+                                console.log(ligne.substring(nbquote[0]+1,nbquote[1]))
+                                nbquote = [0,0]
+
+                            }
+                        }
+                    }
+                    document.getElementById('content').innerHTML += ligneToAppend;
+                }
+                
+            });
+        } catch (erreur) {
+            console.error('Une erreur s\'est produite lors de la lecture du fichier :', erreur);
+        }
+    }
+
+    // Appel de la fonction pour lire le fichier
+    lireFichierLigneParLigne(cheminFichier);
+</script>
+
+<style>
+    .bold{
+        font-weight: 800;
+        color: brown;
+    }
+    
+    #red{
+        background-color: red;
+    }
+    #green{
+        background-color: green;
+    }
+    #orange{
+        background-color: orange;
+    }
+    .code_header{
+        width: 100%;
+        display: flex;
+        align-items: start;
+        height: 20px;
+    }
+    .code_header h2{
+        padding: 0;
+        margin: 0;
+        font-size: 0.7rem;
+        color: #c4c4c4;
+        margin-left: 10px;
+    }
+    .circle{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        background-color: #fff;
+    }
+    .content .code {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        background-color: #060A1B;
+        padding: 10px;
+        border-radius: 5px;
+        color: #fff;
+    }
+    .code_content{
+        background-color: #0e1432;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .content .code p{
+        margin: 5px;
+        font-size: 1rem;
+    }
+</style>
+
+    
