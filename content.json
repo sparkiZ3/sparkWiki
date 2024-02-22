@@ -1,0 +1,18 @@
+{
+    "python":{
+        "basics":"basics.md",
+        "loops":"loops.md",
+        "functions":"functions.md",
+        "classes":"classes.md",
+        "modules":"modules.md",
+        "exceptions":"exceptions.md"
+    },
+    "kotlin":{
+        "basics":"kotlin/basics.md",
+        "loops":"kotlin/loops.md",
+        "functions":"kotlin/functions.md",
+        "classes":"kotlin/classes.md",
+        "modules":"kotlin/modules.md",
+        "exceptions":"kotlin/exceptions.md"
+    }
+}

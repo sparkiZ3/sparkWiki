@@ -24,35 +24,7 @@
         </div>
     </div>
     <div class="main">
-        <div class="left_navbar">
-            <div class="navbar_main_title">
-                <div onclick="openmenu(this.id)" id="Python" class="navbar_main_title_header">
-                    <h2>Python</h2>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="12.5" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
-                </div>
-                <div id="Python_content" class="navbar_main_content" style="height: 0px;">
-                    <a onclick="lireFichierLigneParLigne('python','test.md')">Open file</a>
-                    <a href="?folder=python&file=pasbasics">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                </div>
-            </div>
-            <div class="navbar_main_title">
-                <div onclick="openmenu(this.id)" id="Kotlin" class="navbar_main_title_header">
-                    <h2>Kotlin</h2>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="12.5" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
-                </div>
-                <div id="Kotlin_content" class="navbar_main_content" style="height: 0px;">
-                    <a href="#">Basics</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                    <a href="#">Open file</a>
-                </div>
-            </div>
+        <div class="left_navbar" id="left_navbar">
         </div>
         <div id="content" class="content">
         </div>
@@ -61,13 +33,37 @@
         function openmenu(id){
             var menu = document.getElementById(id);
             var menu_content = document.getElementById(id + "_content");
-            console.log(menu_content);
             if (menu_content.style.height == "0px"){
                 menu_content.style.height = "100%";
             }else{
                 menu_content.style.height = "0px";
             }
         }
+    </script>
+    <script>
+        var svgDownArrow ='<svg xmlns="http://www.w3.org/2000/svg" height="20" width="12.5" viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>'
+        fetch('content.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur de réseau');
+            }
+            // Convertion de la réponse en JSON
+            return response.json();
+        })
+        .then(data => {//traitement des données
+            var main_elements = data;
+            for (var main_element in main_elements) {
+                document.getElementById('left_navbar').innerHTML +="<div class=\"navbar_main_title\"><div onclick=\"openmenu(this.id)\" id=\""+main_element+"\" class=\"navbar_main_title_header\"><h2>"+main_element+"</h2>"+svgDownArrow+"</div><div id=\""+main_element+"_content\" class=\"navbar_main_content\" style=\"height: 0px;\"></div></div>";
+                for(el in main_elements[main_element]){
+                    folder = main_element;
+                    file=main_elements[main_element][el]
+                    document.getElementById(main_element+"_content").innerHTML += "<p onclick=\"decrypt('" + folder + "','" + file + "')\">" + el + "</p>";
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération des données:', error);
+        });
     </script>
 </body>
 

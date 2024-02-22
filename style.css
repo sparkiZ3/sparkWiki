@@ -84,7 +84,7 @@ body{
     display: flex;
     flex-direction: column;
 }
-.navbar_main_content a{
+.navbar_main_content p{
     text-decoration: none;
     color: #fff;
     font-weight: 600;
@@ -93,7 +93,7 @@ body{
     margin-left: 40px;
     margin-bottom: 20px;
 }
-.navbar_main_content:hover a:hover{
+.navbar_main_content:hover p:hover{
     color: var(--title_color);
     transition: 0.2s;
 }

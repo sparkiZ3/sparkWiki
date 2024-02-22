@@ -1,4 +1,4 @@
-async function lireFichierLigneParLigne(folder, file) {
+async function decrypt(folder, file) {
     console.log("Lecture du fichier : " + folder + file);
     cheminFichier = folder +"/"+file;
     document.getElementById('content').innerHTML = "";
